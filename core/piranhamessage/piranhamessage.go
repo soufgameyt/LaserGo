@@ -24,7 +24,6 @@ func NewPiranhaMessage(buf []byte, client *network.Client, msgTypeName string) *
 		messageTypeName: msgTypeName,
 	}
 	pm.ReplaceBuffer(buf)
-	utils.DebuggerInst.Info(msgTypeName)
 	utils.DebuggerInst.Info("PiranhaMessage.Send -> " + msgTypeName)
 	return pm
 }
