@@ -1,5 +1,6 @@
 package datastream
 
+// theres 20% of chance of this being wrong.. not my problem :grin:
 type ByteStream struct {
 	buffer    []byte
 	offset    int
