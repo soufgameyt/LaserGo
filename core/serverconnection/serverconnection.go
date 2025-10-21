@@ -1,6 +1,8 @@
-package core
+package serverconnection
 
 import (
+	MessageManager "LaserGo/core/messagemanager"
+	"LaserGo/core/network"
 	"LaserGo/utils"
 	"fmt"
 	"net"
@@ -14,7 +16,7 @@ var serverinst net.Listener // litterally https://go.dev/src/net/example_test.go
 func Init() *serverconnection {
 	if serverconnectinstance == nil {
 		serverconnectinstance = &serverconnection{}
-		utils.DebuggerInst.Info("ServerConnection.createServerConnection() ->  Created Server Connection Instance!")
+		utils.DebuggerInst.Info("ServerConnection.Init ->  Created ServerConnection Instance!")
 	}
 
 	return serverconnectinstance
@@ -27,7 +29,7 @@ func Listen(server_ip string, server_port int) {
 		return
 	}
 	serverinst = ln
-	utils.DebuggerInst.Info("ServerConnection.Listen() -> Server started on", server_ip, server_port)
+	utils.DebuggerInst.Info("ServerConnection.Listen -> Server started on", server_ip, "with port", server_port)
 
 	for {
 		conn, err := serverinst.Accept()
@@ -36,23 +38,23 @@ func Listen(server_ip string, server_port int) {
 			continue
 		}
 
-		utils.DebuggerInst.Info("ServerConnection.Listen() -> New client connected!")
+		utils.DebuggerInst.Info("ServerConnection.Listen -> New client connected!")
 		HandleClient(conn)
 	}
 }
 
 func HandleClient(conn net.Conn) {
-	client := &Client{}
+	client := &network.Client{}
 	buf := make([]byte, 1024)
 
 	for {
 		n, err := conn.Read(buf)
 		if err != nil {
-			utils.DebuggerInst.Warn("ServerConnection.Listen() -> Client Disconnected!")
+			utils.DebuggerInst.Warn("ServerConnection.Listen -> Client Disconnected!")
 			return
 		}
 
-		ReceiveMessage(buf[:n], client)
+		MessageManager.ReceiveMessage(buf[:n], client)
 	}
 }
 
