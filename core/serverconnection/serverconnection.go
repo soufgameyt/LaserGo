@@ -11,7 +11,7 @@ import (
 type serverconnection struct{}
 
 var serverconnectinstance *serverconnection
-var serverinst net.Listener // litterally https://go.dev/src/net/example_test.go
+var serverinst net.Listener // litterally took from https://go.dev/src/net/example_test.go lol
 
 func Init() *serverconnection {
 	if serverconnectinstance == nil {
@@ -44,7 +44,7 @@ func Listen(server_ip string, server_port int) {
 }
 
 func HandleClient(conn net.Conn) {
-	client := &network.Client{}
+	client := network.NewClient(conn)
 	buf := make([]byte, 1024)
 
 	for {
