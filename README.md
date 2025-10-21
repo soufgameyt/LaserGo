@@ -1,5 +1,5 @@
 # LaserGo
-First Ever Brawl Stars Server Written in Go
+First Ever Open Source Brawl Stars Server Core Written in Go
 
 ## Usage
 ![Usage](usage.png)
